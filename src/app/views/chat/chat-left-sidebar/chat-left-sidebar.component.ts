@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User, ChatService } from '../chat.service';
+import { ChatService } from '../chat.service';
 
 @Component({
   selector: 'app-chat-left-sidebar',
@@ -9,45 +9,53 @@ import { User, ChatService } from '../chat.service';
 })
 export class ChatLeftSidebarComponent implements OnInit {
 
-  userUpdateSub: Subscription;
   loadDataSub: Subscription;
 
-  isSidenavOpen = true;
-
-  currentUser: User = new User();
-  contacts: any[];
-
+  listOfConversations: any[] = [];
+  messagesList: any[] = [];
+  activeConversation: any | null = null;
+  newMessage: String = '';
+  conversationToEdit: any | null = null;
+  private chatUpdateSub: Subscription;
   constructor(private chatService: ChatService) {}
 
   ngOnInit() {
-    // this.chatService.onChatsUpdated
-    //   .subscribe(updatedChats => {
-    //     this.chats = updatedChats;
-    //   });
-
-    this.userUpdateSub = this.chatService.onUserUpdated
-      .subscribe(updatedUser => {
-        this.currentUser = updatedUser;
-      });
-
-    this.loadDataSub = this.chatService.loadChatData()
-      .subscribe(res => {
-        this.currentUser = this.chatService.user;
-        // this.chats = this.chatService.chats;
-        this.contacts = this.chatService.contacts;
+    this.loadDataSub = this.chatService.getListOfConversations()
+      .subscribe(listOfConversations => {
+        this.listOfConversations = listOfConversations;
+        console.log(listOfConversations);
       });
   }
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnDestroy() {
-    if ( this.userUpdateSub ) { this.userUpdateSub.unsubscribe(); }
     if ( this.loadDataSub ) { this.loadDataSub.unsubscribe(); }
   }
 
-  getChatByContact(contactId) {
-    this.chatService.getChatByContact(contactId)
-      .subscribe(res => {
-        console.log('from sub', res);
-      }, err => {
-        console.log(err);
-      });
+  getChatByConversation(conversationId) {
+    this.chatService.onChatsUpdated.next(this.listOfConversations.find(elt => elt.id === conversationId));
+  }
+  createNewConversation(): void {
+    const userId = 1; // Remplacez par l'ID utilisateur actuel
+    this.chatService.createNewConversation(userId).subscribe(response => {
+      const conversation = response.conversation;
+      const defaultMessage = response.default_message;
+      this.listOfConversations.push(conversation);
+      this.activeConversation = conversation;
+      this.messagesList = [defaultMessage];
+    });
+    this.chatService.onChatsUpdated.next(this.listOfConversations.find(elt => elt.id === this.activeConversation.id ));
+  }
+
+  goToEditConversationLabel(conversation) {
+    this.conversationToEdit = conversation;
+  }
+
+  changeConversationLabel(): void {
+    if (this.conversationToEdit) {
+      this.chatService.updateConversationLabel(this.conversationToEdit.id, this.conversationToEdit.label)
+          .subscribe(updatedConversation => {
+            this.conversationToEdit = null;
+          });
+    }
   }
 }

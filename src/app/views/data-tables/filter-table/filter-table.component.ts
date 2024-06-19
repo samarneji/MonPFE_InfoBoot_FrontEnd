@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/shared/services/product.service';
+import { DocumentService } from 'src/app/shared/services/document.service';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 
@@ -10,49 +10,41 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class FilterTableComponent implements OnInit {
   searchControl: FormControl = new FormControl();
-  products;
-  filteredProducts;
+  documents;
+  filteredDocuments;
 
-  constructor(
-    private productService: ProductService
-  ) { }
+  constructor(private documentService: DocumentService) {}
 
   ngOnInit() {
-    this.productService.getProducts()
-    .subscribe((res: any[]) => {
-      this.products = [...res];
-      this.filteredProducts = res;
-    });
+    this.documentService.getDocuments()
+        .subscribe((res: any[]) => {
+          console.log('Documents received:', res);
+          this.documents = [...res];
+          this.filteredDocuments = res;
+        });
 
     this.searchControl.valueChanges
-    .pipe(debounceTime(200))
-    .subscribe(value => {
-      this.filerData(value);
-    });
+        .pipe(debounceTime(200))
+        .subscribe(value => {
+          this.filterData(value);
+        });
   }
 
-  filerData(val) {
+  filterData(val) {
     if (val) {
       val = val.toLowerCase();
     } else {
-      return this.filteredProducts = [...this.products];
+      return this.filteredDocuments = [...this.documents];
     }
 
-    const columns = Object.keys(this.products[0]);
+    const columns = Object.keys(this.documents[0] || {});
     if (!columns.length) {
       return;
     }
 
-    const rows = this.products.filter(function(d) {
-      for (let i = 0; i <= columns.length; i++) {
-        const column = columns[i];
-        // console.log(d[column]);
-        if (d[column] && d[column].toString().toLowerCase().indexOf(val) > -1) {
-          return true;
-        }
-      }
+    const rows = this.documents.filter(function(d) {
+      return columns.some(column => d[column] && d[column].toString().toLowerCase().includes(val));
     });
-    this.filteredProducts = rows;
+    this.filteredDocuments = rows;
   }
-
 }

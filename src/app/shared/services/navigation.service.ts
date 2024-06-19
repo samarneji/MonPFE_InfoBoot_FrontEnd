@@ -126,7 +126,7 @@ export class NavigationService {
                 { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', type: 'link' },
                 { icon: 'i-Full-View-Window', name: 'Fullscreen', state: '/tables/full', type: 'link' },
                 { icon: 'i-Code-Window', name: 'Paging', state: '/tables/paging', type: 'link' },
-                { icon: 'i-Filter-2', name: 'Filter', state: '/tables/filter', type: 'link' },
+                { icon: 'i-Filter-2', name: 'Documents', state: '/tables/filter', type: 'link' },
             ]
         },
         {

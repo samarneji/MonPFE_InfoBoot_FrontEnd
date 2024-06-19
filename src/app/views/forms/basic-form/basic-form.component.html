@@ -9,7 +9,7 @@
 <div class="separator-breadcrumb border-top"></div>
 
 <div class="row">
-    <div class="col-md-12">
+   <!-- <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title mb-3">Form Inputs</div>
@@ -29,7 +29,7 @@
                             <label for="exampleInputEmail1">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                 placeholder="Enter email">
-                            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            &lt;!&ndash; <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> &ndash;&gt;
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
@@ -76,77 +76,69 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-body">
-                <div class="card-title mb-3">Form Inputs Rounded</div>
+                <div class="card-title mb-3">Télécharger les documents</div>
                 <form [formGroup]="formBasic" (ngSubmit)="submit()">
                     <div class="row">
                         <div class="col-md-6 form-group mb-3">
-                            <label for="firstName">First name</label>
-                            <input type="text" class="form-control form-control-rounded" id="firstName" placeholder="Enter your first name">
+                            <label for="titre">Titre</label>
+                            <input type="text" class="form-control form-control-rounded" id="titre" formControlName="titre" placeholder="Titre">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
-                            <label for="lastName">Last name</label>
-                            <input type="text" class="form-control form-control-rounded" id="lastName" placeholder="Enter your last name">
+                            <label for="type_document">Type document</label>
+                            <input type="text" class="form-control form-control-rounded" id="type_document" formControlName="type_document" placeholder="Type document">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control form-control-rounded" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="Enter email">
+                            <label for="language">Langue</label>
+                            <input class="form-control form-control-rounded" id="language" formControlName="language" placeholder="Langue">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
-                            <label for="phone">Phone</label>
-                            <input class="form-control form-control-rounded" id="phone" placeholder="Enter phone">
+                            <label for="description">Description</label>
+                            <input class="form-control form-control-rounded" id="description" formControlName="description" placeholder="Description">
                         </div>
 
                         <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Cradit card number</label>
-                            <input class="form-control form-control-rounded" id="credit" placeholder="Card">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="credit">Website</label>
-                            <input class="form-control form-control-rounded" id="credit" placeholder="Web address">
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Birth date</label>
-                            <div class="input-group">
-                                <input id="picker1" class="form-control form-control-rounded" placeholder="yyyy-mm-dd" name="dp"
-                                    ngbDatepicker #dp="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary btn-rounded" (click)="dp.toggle()" type="button">
-                                        <i class="icon-regular i-Calendar-4"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="picker1">Select</label>
-                            <select class="form-control form-control-rounded">
-                                <option>Option 1</option>
-                                <option>Option 1</option>
-                                <option>Option 1</option>
+                            <label for="project">Projet</label>
+                            <select class="form-control form-control-rounded" formControlName="project">
+                                <option *ngFor="let project of projects" [value]="project.id">{{ project.projectName }}</option>
                             </select>
                         </div>
 
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="domaine">Domaine</label>
+                            <select class="form-control form-control-rounded" formControlName="domaine">
+                                <option *ngFor="let domaine of domaines" [value]="domaine.id">{{ domaine.nom_domaine }}</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3 col-md-6">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Télécharger</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile01" formControlName="fichier" aria-describedby="inputGroupFileAddon01" (change)="handleFileInput($event)">
+                                <label class="custom-file-label" for="inputGroupFile01">{{ file?.name || 'Choose file' }}</label>
+                            </div>
+                        </div>
+
                         <div class="col-md-12">
-                            <btn-loading btnClass="btn-primary btn-rounded" [loading]="loading">Submit</btn-loading>
+                            <button class="btn-primary btn-rounded" type="submit" [disabled]="loading || !formBasic.valid">Enregistrer</button>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 
-    <div class="col-md-12">
+   <!-- <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">Switch</div>
@@ -188,8 +180,8 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-6">
+-->
+    <!--<div class="col-md-6">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">Checkbox Default</div>
@@ -359,6 +351,6 @@
                 </label>
             </div>
         </div>
-    </div>
+    </div>-->
 
 </div>

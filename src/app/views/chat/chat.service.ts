@@ -34,20 +34,20 @@ export class User {
   providedIn: 'root'
 })
 export class ChatService {
+
+  constructor(private http: HttpClient) {
+
+  }
   public contacts: User[];
   public chats: ChatCollection[];
   public user: User;
-
   onContactSelected = new BehaviorSubject<any>(null);
   onUserUpdated = new Subject<User>();
 
   onChatSelected = new BehaviorSubject<any>(null);
   onChatsUpdated = new Subject<any>();
   loadingCollection: boolean;
-
-  constructor(private http: HttpClient) {
-
-  }
+    private baseUrl = 'http://127.0.0.1:2387'; // URL de base de l'API Django
 
   loadChatData(): Observable<any> {
     return combineLatest(
@@ -165,5 +165,29 @@ export class ChatService {
     }, 1500);
   }
 
+    getListOfConversations(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/conversations/`);
+  }
+
+  getChatByConversation(conversationId: number): Observable<any> {
+      return this.http.get(`${this.baseUrl}/messages/${conversationId}/`);
+  }
+  sendMessage(conversationId: number, query: string): Observable<any> {
+    const data = {
+      conversation_id: conversationId,
+      query: query
+    };
+    return this.http.post(`${this.baseUrl}/chatbot/`, data);
+  }
+  createNewConversation(userId: number): Observable<any> {
+    const data = {
+      user_id: userId
+    };
+    return this.http.post(`${this.baseUrl}/create-conversation/`, data);
+  }
+  updateConversationLabel(conversationId: number, label: string): Observable<any> {
+    const data = { label: label };
+    return this.http.patch(`${this.baseUrl}/update-label/${conversationId}/`, data);
+  }
 }
 

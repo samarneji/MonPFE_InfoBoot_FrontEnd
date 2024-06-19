@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {DataLayerService} from '../../../shared/services/data-layer.service';
 
 @Component({
     selector: 'app-input-mask',
@@ -8,23 +10,47 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class InputMaskComponent implements OnInit {
     formMask: FormGroup;
-    isbnMask1 = [/\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/];
-    isbnMask2 = [/\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/];
-    isbnMask3 = [/\d/, /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '/', /\d/];
-    phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-    cardMask  = [ /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
-    dateMask  = [ /\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
+    scripts: any[] = [];
+    cronSchedule: string;
+    selectedScriptId: number;
+    configName: string;
+    isActive: Boolean = true;
 
-    constructor(private fb: FormBuilder) { }
+
+    constructor(private fb: FormBuilder,
+    private http: HttpClient,
+    private dataLayerService: DataLayerService) { }
 
     ngOnInit() {
         this.formMask = this.fb.group({
-            experience: [],
-            phone: []
+            configName: [''],
+            selectedScriptId: [''],
+            cronSchedule: [''],
+            isActive: [true]
+        });
+
+        this.dataLayerService.getScripts().subscribe(data => {
+            this.scripts = data;
         });
     }
     submit() {
-        console.log(this.formMask.value);
+        if (this.formMask.valid) {
+            const formData = new FormData();
+            formData.append('name', this.formMask.value.configName);
+            formData.append('script', this.formMask.value.selectedScriptId);
+            formData.append('cron_schedule', this.formMask.value.cronSchedule);
+            formData.append('is_active', this.formMask.value.isActive);
+
+            console.log('Submitting Task Configuration:', formData);
+            this.dataLayerService.createTaskConfiguration(formData).subscribe(
+                response => {
+                    console.log('Success! Configuration Saved:', response);
+                    alert('Configuration saved successfully!');
+                }
+            );
+        } else {
+            alert('Please fill all required fields.');
+        }
     }
 
 }
