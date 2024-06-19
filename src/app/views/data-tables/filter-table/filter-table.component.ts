@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from 'src/app/shared/services/document.service';
 import { FormControl } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import {debounceTime, map} from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-filter-table',
@@ -18,9 +19,25 @@ export class FilterTableComponent implements OnInit {
   ngOnInit() {
     this.documentService.getDocuments()
         .subscribe((res: any[]) => {
-          console.log('Documents received:', res);
-          this.documents = [...res];
-          this.filteredDocuments = res;
+          const documentsWithDetails = res.map(doc => {
+            const domaine$ = this.documentService.getDomaineById(doc.domaine).pipe(
+                map(domaine => domaine.nom_domaine)
+            );
+            const project$ = this.documentService.getProjectById(doc.project).pipe(
+                map(project => project.projectName)
+            );
+            return forkJoin([domaine$, project$]).pipe(
+                map(([nom_domaine, projectName]) => ({
+                  ...doc,
+                  nom_domaine,
+                  projectName
+                }))
+            );
+          });
+          forkJoin(documentsWithDetails).subscribe(docs => {
+            this.documents = docs;
+            this.filteredDocuments = docs;
+          });
         });
 
     this.searchControl.valueChanges

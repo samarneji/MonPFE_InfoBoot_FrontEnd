@@ -1,6 +1,6 @@
 <div class="">
     <div class="breadcrumb">
-        <h1>Documents</h1>
+        <h1>La liste des documents</h1>
         <ul>
             <li>Filter</li>
         </ul>
@@ -25,19 +25,19 @@
                         [rowHeight]="60"
                         [scrollbarV]="true"
                         [rows]="filteredDocuments"
-                       >
+                >
 
-                    <ngx-datatable-column name="id" prop="id">
+                    <!--<ngx-datatable-column name="id" prop="id">
                         <ng-template ngx-datatable-header-template>ID</ng-template>
-                    </ngx-datatable-column>
+                    </ngx-datatable-column>-->
 
                     <ngx-datatable-column name="titre" prop="titre">
                         <ng-template ngx-datatable-header-template>Titre</ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="type_document" prop="type_document">
-                        <ng-template ngx-datatable-header-template>Type</ng-template>
-                    </ngx-datatable-column>
+                    <!-- <ngx-datatable-column name="type_document" prop="type_document">
+                         <ng-template ngx-datatable-header-template>Type</ng-template>
+                     </ngx-datatable-column>-->
 
                     <ngx-datatable-column name="description" prop="description">
                         <ng-template ngx-datatable-header-template>Description</ng-template>
@@ -47,12 +47,12 @@
                         <ng-template ngx-datatable-header-template>Langue</ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="domaine" prop="domaine">
-                        <ng-template ngx-datatable-header-template>Domaine ID</ng-template>
+                    <ngx-datatable-column name="domaine" prop="nom_domaine">
+                        <ng-template ngx-datatable-header-template>Domaine</ng-template>
                     </ngx-datatable-column>
 
-                    <ngx-datatable-column name="project" prop="project">
-                        <ng-template ngx-datatable-header-template>Projet ID</ng-template>
+                    <ngx-datatable-column name="project" prop="projectName">
+                        <ng-template ngx-datatable-header-template>Projet</ng-template>
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="date_ajout" prop="date_ajout">
@@ -60,15 +60,13 @@
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="fichier">
-                        <ng-template ngx-datatable-header-template>Fichier</ng-template>
+                        <ng-template ngx-datatable-header-template>Contenu</ng-template>
                         <ng-template ngx-datatable-cell-template let-row="row">
                             <a [href]="row.fichier" target="_blank">Voir le document</a>
                         </ng-template>
                     </ngx-datatable-column>
 
                 </ngx-datatable>
-
-
             </div>
         </div>
     </div>

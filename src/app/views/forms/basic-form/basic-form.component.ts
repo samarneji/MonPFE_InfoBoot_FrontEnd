@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
-import {DataLayerService} from '../../../shared/services/data-layer.service';
-
+import { DataLayerService } from '../../../shared/services/data-layer.service';
 
 @Component({
   selector: 'app-basic-form',
@@ -25,20 +24,13 @@ export class BasicFormComponent implements OnInit {
       private dataLayerService: DataLayerService
   ) {
   }
+
   ngOnInit() {
     this.buildFormBasic();
     this.radioGroup = this.fb.group({
       radio: []
     });
-    this.formBasic = this.fb.group({
-      titre: ['', Validators.required],
-      type_document: ['', Validators.required],
-      description: [''],
-      language: ['', Validators.required],
-      project: ['', Validators.required],
-      domaine: ['', Validators.required],
-      fichier: [null, Validators.required]
-    });
+
     this.dataLayerService.getDomaines().subscribe(
         (data) => {
           console.log('Domaines:', data);
@@ -61,55 +53,53 @@ export class BasicFormComponent implements OnInit {
         }
     );
   }
+
   handleFileInput(event: Event) {
     const element = event.target as HTMLInputElement;
     if (element.files && element.files.length > 0) {
       this.file = element.files[0];
     }
   }
+
   buildFormBasic() {
     this.formBasic = this.fb.group({
-      domaine: [null, Validators.required],  // Ajoutez vos propres validateurs si nécessaire
+      domaine: [null, Validators.required],
       project: [null, Validators.required],
       titre: [null, Validators.required],
-      type_document: [null, Validators.required],
       description: [null],
       language: [null, Validators.required],
-      fichier: [null, Validators.required]  // Contrôleur pour le fichier
+      fichier: [null, Validators.required]
     });
   }
+
   submit() {
-      if (this.formBasic.valid && this.file) {
-        this.loading = true; // Afficher l'indicateur de chargement
+    if (this.formBasic.valid && this.file) {
+      this.loading = true;
 
-        const formData = new FormData();
-        formData.append('fichier', this.file, this.file.name);
-        formData.append('titre', this.formBasic.get('titre').value);
-        formData.append('type_document', this.formBasic.get('type_document').value);
-        formData.append('description', this.formBasic.get('description').value || ''); // Gérer les valeurs nulles
-        formData.append('language', this.formBasic.get('language').value);
-        formData.append('domaine', this.formBasic.get('domaine').value); // Assurez-vous que cela correspond à l'ID du domaine
-        formData.append('project', this.formBasic.get('project').value); // Assurez-vous que cela correspond à l'ID du projet
+      const formData = new FormData();
+      formData.append('fichier', this.file, this.file.name);
+      formData.append('titre', this.formBasic.get('titre').value);
+      formData.append('type_document', 'pdf'); // Type document fixé à 'pdf'
+      formData.append('description', this.formBasic.get('description').value || '');
+      formData.append('language', this.formBasic.get('language').value);
+      formData.append('domaine', this.formBasic.get('domaine').value);
+      formData.append('project', this.formBasic.get('project').value);
 
-
-
-        // Faire la requête POST
-        this.http.post('http://127.0.0.1:2387/upload/', formData).subscribe({
-          next: (response) => {
-            this.toastr.success('File and data uploaded successfully.', 'Success!');
-            this.formBasic.reset(); // Réinitialiser le formulaire après le téléchargement réussi
-            this.loading = false; // Cacher l'indicateur de chargement
-          },
-          error: (error) => {
-            this.toastr.error('Failed to upload file and data. ' + error.message, 'Error!');
-            this.loading = false; // Cacher l'indicateur de chargement
-          }
-        });
-      } else {
-        this.toastr.error('Please fill in all required fields.', 'Form Incomplete!');
-        this.loading = false; // Cacher l'indicateur de chargement si le formulaire n'est pas valide
-      }
+      this.http.post('http://127.0.0.1:2387/upload/', formData).subscribe({
+        next: (response) => {
+          this.toastr.success('Document téléchargé avec succès.', 'Succès!');
+          this.formBasic.reset();
+          this.loading = false;
+        },
+        error: (error) => {
+          this.toastr.error('Échec du téléchargement du fichier et des données. ' + error.message, 'Erreur!');
+          this.loading = false;
+        }
+      });
+    } else {
+      this.toastr.error('Veuillez remplir tous les champs obligatoires.', 'Form Incomplete!');
+      console.log('errr');
+      this.loading = false;
+    }
   }
-
-
 }
