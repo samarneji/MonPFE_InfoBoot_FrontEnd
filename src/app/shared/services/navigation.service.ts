@@ -131,7 +131,7 @@ export class NavigationService {
                 { icon: 'i-Filter-2', name: 'Documents', state: '/tables/filter', type: 'link' },
             ]
         },
-    /*    {
+       {
             name: 'Sessions',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             type: 'dropDown',
@@ -173,7 +173,7 @@ export class NavigationService {
             tooltip: 'Documentation',
             icon: 'i-Safe-Box1',
             state: 'http://demos.ui-lib.com/gull-doc'
-        }*/
+        }
     ];
 
 

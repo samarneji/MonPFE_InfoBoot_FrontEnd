@@ -15,8 +15,8 @@
         <div class="card card-icon mb-4">
           <div class="card-body text-center">
             <i class="i-Share-on-Cloud"></i>
-            <p class="text-muted mt-2 mb-2">Today's Upload</p>
-            <p class="text-primary text-24 line-height-1 m-0">21</p>
+            <p class="text-muted mt-2 mb-2">Documents uploader</p>
+            <p class="text-primary text-24 line-height-1 m-0">{{ totalDocuments }}</p>
           </div>
         </div>
       </div>
@@ -24,9 +24,9 @@
       <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-icon mb-4">
           <div class="card-body text-center">
-            <i class="i-Add-User"></i>
-            <p class="text-muted mt-2 mb-2">New Users</p>
-            <p class="text-primary text-24 line-height-1 m-0">21</p>
+            <i class="i-Administrator"></i>
+            <p class="text-muted mt-2 mb-2">Collaborateur</p>
+            <p class="text-primary text-24 line-height-1 m-0">1</p>
           </div>
         </div>
       </div>
@@ -34,38 +34,42 @@
       <div class="col-lg-4 col-md-6 col-sm-6">
         <div class="card card-icon mb-4">
           <div class="card-body text-center">
-            <i class="i-Money-2"></i>
-            <p class="text-muted mt-2 mb-2">Total sales</p>
-            <p class="text-primary text-24 line-height-1 m-0">4021</p>
+            <i class="i-Speach-Bubbles"></i>
+            <p class="text-muted mt-2 mb-2">Interactions avec bot </p>
+            <p class="text-primary text-24 line-height-1 m-0"> {{totalMessages}}</p>
           </div>
         </div>
       </div>
-  
-    
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-icon-big mb-4">
+
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-icon mb-4">
           <div class="card-body text-center">
-            <i class="i-Money-2"></i>
-            <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
+            <i class="i-File-Search"></i>
+            <p class="text-muted mt-2 mb-2">Documents Référencés </p>
+            <p class="text-primary text-24 line-height-1 m-0"> {{totalFileResponseMessages}}</p>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-icon-big mb-4">
-          <div class="card-body text-center">
-            <i class="i-Gear"></i>
-            <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
-          </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <div class="card card-icon mb-4">
+        <div class="card-body text-center">
+          <i class="i-Speach-Bubble-12"></i>
+          <p class="text-muted mt-2 mb-2">Réponse NLP </p>
+          <p class="text-primary text-24 line-height-1 m-0"> {{totalTextResponseMessages}}</p>
         </div>
       </div>
-      <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-icon-big mb-4">
-          <div class="card-body text-center">
-            <i class="i-Bell"></i>
-            <p class="line-height-1 text-title text-18 mt-2 mb-0">4021</p>
-          </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <div class="card card-icon mb-4">
+        <div class="card-body text-center">
+          <i class="i-Data-Refresh"></i>
+          <p class="text-muted mt-2 mb-2">Requêtes SQL Générées </p>
+          <p class="text-primary text-24 line-height-1 m-0"> {{totalSqlResponseMessages}}</p>
         </div>
       </div>
+    </div>
     </div>
   </div>
 
@@ -158,7 +162,7 @@
     </div>
   </div>
 
-  <div class="col-md-12">
+  <!--<div class="col-md-12">
     <div class="card o-hidden mb-4">
       <ngx-datatable
       style="height: calc(100vh - 270px); box-shadow: none"
@@ -196,7 +200,7 @@
         </ngx-datatable-column>
       </ngx-datatable>
     </div>
-  </div>
+  </div>-->
 
   
 </div>
