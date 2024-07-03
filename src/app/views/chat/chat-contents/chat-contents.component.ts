@@ -40,7 +40,7 @@ export class ChatContentsComponent implements OnInit, OnDestroy {
         this.messagesList = res;
         this.messagesList.forEach(message => {
           if (message.response_type === 'file') {
-            message.text = `<a href="${message.text}" download="${message.file_name}">Télécharger ${message.file_name}</a>`;
+            message.text = `<a  href="${message.text}" download="${message.file_name}">Voici le document recherché:  ${message.file_name}</a>`;
           }
         });
         console.log('from sub', res);
@@ -83,7 +83,7 @@ export class ChatContentsComponent implements OnInit, OnDestroy {
           const fileResponse = response;
           this.messagesList.push({
             sender: 'bot',
-            text: `<a href="${fileResponse.response}" download="${fileResponse.file_name}" >Télécharger ${fileResponse.file_name}</a>`,
+            text: `<a href="${fileResponse.response}" download="${fileResponse.file_name}" >Voici le document recherché:   ${fileResponse.file_name}</a>`,
             created_at: new Date()
           });
         } else {

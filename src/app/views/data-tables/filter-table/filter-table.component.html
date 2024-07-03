@@ -44,7 +44,12 @@
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="language" prop="language">
-                        <ng-template ngx-datatable-header-template>Langue</ng-template>
+                        <ng-template ngx-datatable-header-template>
+                            Langue
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-value="value">
+                            {{ value === 'fr' ? 'Français' : value }}
+                        </ng-template>
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="domaine" prop="nom_domaine">
@@ -56,7 +61,12 @@
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="date_ajout" prop="date_ajout">
-                        <ng-template ngx-datatable-header-template>Date d'Ajout</ng-template>
+                        <ng-template ngx-datatable-header-template>
+                            Date d'Ajout
+                        </ng-template>
+                        <ng-template ngx-datatable-cell-template let-value="value">
+                            {{ value | date:'dd/MM/yyyy' }}
+                        </ng-template>
                     </ngx-datatable-column>
 
                     <ngx-datatable-column name="fichier">

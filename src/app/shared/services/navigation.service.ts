@@ -56,10 +56,10 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Bar-Chart',
             sub: [
-                { icon: 'i-Clock-3', name: 'Version 1', state: '/dashboard/v1', type: 'link' },
-                { icon: 'i-Clock-4', name: 'Version 2', state: '/dashboard/v2', type: 'link' },
-                { icon: 'i-Over-Time', name: 'Version 3', state: '/dashboard/v3', type: 'link' },
-                { icon: 'i-Clock', name: 'Version 4', state: '/dashboard/v4', type: 'link' },
+                /*{ icon: 'i-Clock-3', name: 'Version 1', state: '/dashboard/v1', type: 'link' },*/
+                { icon: 'i-Clock-4', name: 'Dashboard', state: '/dashboard/v2', type: 'link' }
+              /*  { icon: 'i-Over-Time', name: 'Version 3', state: '/dashboard/v3', type: 'link' },
+                { icon: 'i-Clock', name: 'Version 4', state: '/dashboard/v4', type: 'link' },*/
             ]
         },
       /*  {
@@ -109,10 +109,10 @@ export class NavigationService {
             icon: 'i-File-Clipboard-File--Text',
             sub: [
                 { icon: 'i-File-Clipboard-Text--Image', name: 'Document', state: '/forms/basic', type: 'link' },
-               /* { icon: 'i-Split-Vertical', name: 'Form layouts', state: '/forms/layouts', type: 'link' },
-                { icon: 'i-Receipt-4', name: 'Input Group', state: '/forms/input-group', type: 'link' },
-                { icon: 'i-File-Edit', name: 'Input Mask', state: '/forms/input-mask', type: 'link' },
-                { icon: 'i-Tag-2', name: 'Tag Input', state: '/forms/tag-input', type: 'link' },*/
+              /*  { icon: 'i-Split-Vertical', name: 'Form layouts', state: '/forms/layouts', type: 'link' },
+                { icon: 'i-Receipt-4', name: 'Input Group', state: '/forms/input-group', type: 'link' },*/
+                { icon: 'i-File-Edit', name: 'Scraping', state: '/forms/input-mask', type: 'link' },
+            /*    { icon: 'i-Tag-2', name: 'Tag Input', state: '/forms/tag-input', type: 'link' },*/
                 { icon: 'i-Width-Window', name: 'Annotation', state: '/forms/wizard', type: 'link' },
 /*
                 { icon: 'i-Crop-2', name: 'Image Cropper', state: '/forms/img-cropper', type: 'link' },
@@ -120,7 +120,7 @@ export class NavigationService {
             ]
         },
         {
-            name: 'Data Tables',
+            name: 'Documents',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             type: 'dropDown',
             icon: 'i-File-Horizontal-Text',
@@ -130,8 +130,8 @@ export class NavigationService {
                 { icon: 'i-Code-Window', name: 'Paging', state: '/tables/paging', type: 'link' },*/
                 { icon: 'i-Filter-2', name: 'Documents', state: '/tables/filter', type: 'link' },
             ]
-        },
-       {
+        }/*,*/
+   /*    {
             name: 'Sessions',
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
             type: 'dropDown',
@@ -173,7 +173,7 @@ export class NavigationService {
             tooltip: 'Documentation',
             icon: 'i-Safe-Box1',
             state: 'http://demos.ui-lib.com/gull-doc'
-        }
+        }*/
     ];
 
 
